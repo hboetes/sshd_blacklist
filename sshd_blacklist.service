@@ -1,0 +1,13 @@
+[Unit]
+Description=Block all brute force attacks on the sshd server.
+Wants=network.target network-online.target
+After=network.target network-online.target
+
+[Service]
+Type=simple
+ExecStart=/etc/sshd_blacklist/logwatcher
+ExecStopPost=/etc/sshd_blacklist/save_sshd_blacklist
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,18 @@
+#!/usr/sbin/nft -f
+# THIS FILE IS GENERATED AND WILL BE OVERWRITTEN.
+# Create this table to make sure it exists when we delete it. Get it? :-)
+table ip sshd_blacklist
+delete table ip sshd_blacklist
+table ip sshd_blacklist {
+	set sshd_blacklist {
+		type ipv4_addr
+		flags interval
+		auto-merge
+		elements = { }
+	}
+
+	chain permissiondenied {
+		type filter hook input priority filter - 10; policy accept;
+		ip saddr @sshd_blacklist log prefix "[sshd_blacklist]" group 0 drop
+	}
+}

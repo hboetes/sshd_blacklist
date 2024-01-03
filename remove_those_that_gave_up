@@ -1,0 +1,50 @@
+#!/bin/zsh
+
+# All this ugly code just to get a list of IP-adresses
+# if only nft could have a simple command to list all ip adresses in a set...
+# https://lore.kernel.org/netfilter-devel/CAOzo9e7yoiiTLvMj0_wFaSvdf0XpsymqUVb8nUMAuj96nPM5ww@mail.gmail.com/T/#u
+source /etc/sshd_blacklist/settings
+
+# Get all ip addresses and ranges from the sshd_blacklist table.
+ranges=$(
+    for word in $(nft list set ip $name $name); do
+        # This regex is not foolproof, but for our purposes it will do.
+        if [[ $word =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            # Get rid of the trailing comma.
+            word=${word%,}
+            echo $word
+        fi
+    done
+      )
+
+# Wonder what an "eikel" is? It's dutch for acorn.
+eikels=$(
+    for element in ${=ranges}; do
+        case $element in
+            *-*)
+                # ipcalc -d converts a range in a set of CIDR.
+                for range in $(ipcalc -d $element | awk -F : '/Network:/ {print $2}'); do
+                    nmap -nsL $range
+                done | awk '/^Nmap scan/ {print $5}'
+                ;;
+            */*)
+                # nmap -nsL converts a CIDR into indidivual IP-addresses.
+                nmap -nsL $element | awk '/^Nmap scan/ {print $5}'
+                ;;
+            *)
+                echo $element
+                ;;
+        esac
+    done
+      )
+
+# empty our log file
+: > $log
+
+# Now we have found our eikels, let's remove them if they gave up.
+for eikel in ${=eikels}; do
+    if ! grep -q "$name.*SRC=$eikel " $ulog; then
+        echo "$eikel gave up" >> $log
+        nft delete element ip $name $name "{ $eikel }"
+    fi
+done
