@@ -16,7 +16,7 @@ versions, assuming they have the following dependencies available:
 - nftables:    latest linux firewall system, much nicer than iptables.
 - logrotate:
 - systemd:
-- geoclue2: look up the country of origin of an IP.
+- geoiplookup: look up the country of origin of an IP.
 - zsh:         the shell I prefer to work with.
 - ulogd:       logs all firewall activity to a proper logfile, instead of to the
   dmesg, this package is not in the default install, so use my copr, see below
@@ -25,12 +25,12 @@ versions, assuming they have the following dependencies available:
 Assuming you also have fedora 39, run the following to install the dependencies:
 ```
   curl https://copr.fedorainfracloud.org/coprs/hanb/ulogd/repo/fedora-39/hanb-ulogd-fedora-39.repo > /etc/yum.repos.d/hanb-ulogd-fedora-39.repo
-  dnf install nftables ulogd logrotate systemd geoclue2 zsh
+  dnf install nftables ulogd logrotate systemd GeoIP zsh
 ```
 
 Or if you use ubuntu/debian:
 ```
-  apt install nftables ulogd logrotate systemd geoclue-2.0 zsh
+  apt install nftables ulogd logrotate systemd geoip-bin zsh
 ```
 
 Copy this directory to /etc/sshd_blacklist and go into the new directory:
