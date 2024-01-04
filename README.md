@@ -2,16 +2,16 @@
 sshd_blacklist is an automated sshd bruteforce blocker, something like fail2ban
 or sshguard. But then a lot simpler.
 
-# Before we do anything
+## Before we do anything
 First some housekeeping:
 - This is beta code!
 - All these instructions have to be done as user root.
 - Only run this program over an ssh session if you are really careful or you can
   easily get to your system.
 
-# Preparation
+## Preparation
 I'm running sshd_blacklist on fedora 39. It should be portable to other linux
-version, assuming they have the following dependencies available:
+versions, assuming they have the following dependencies available:
 
 - nftables:    latest linux firewall system, much nicer than iptables.
 - logrotate:
