@@ -124,8 +124,13 @@ The main sshd log file and the logwatcher in action:
 ```
   journalctl -f -u sshd -u sshd_blacklist
 ```
-
 The firewall log output:
 ```
   tail -F /var/log/ulogd/ulogd_syslogemu.log
+```
+
+## Disabling sshd_blacklist
+In case of emergency you can disable the sshd_blacklist rules by simply running:
+```
+   sshd_blacklist_stop
 ```
