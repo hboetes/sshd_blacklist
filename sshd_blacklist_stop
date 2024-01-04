@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+# This file should be used to completely remove the sshd_blacklist table.
+
+source /etc/sshd_blacklist/settings
+source /etc/sshd_blacklist/functions
+
+# Clear out the existing table if it exists
+nft table ip $name
+nft delete table ip $name
