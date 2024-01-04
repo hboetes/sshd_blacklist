@@ -28,7 +28,7 @@ Assuming you also have fedora 39, run the following to install the dependencies:
   dnf install nftables ulogd logrotate systemd geolookupip zsh
 ```
 
-Of if you use ubuntu/debian:
+Or if you use ubuntu/debian:
 ```
   apt install nftables ulogd logrotate systemd geolookupip zsh
 ```
