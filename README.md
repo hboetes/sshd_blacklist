@@ -48,7 +48,7 @@ We don't want to lock out ourselves so inspect the whitelist file:
 And adapt it to your liking. You can add single IP-addresses and
 CIDR-ranges. The smaller this file is the faster the scripts will run.
 
-
+## Installation
 Now let's create the initial blacklist table:
 ```
   ./sshd_blacklist_init
@@ -116,7 +116,7 @@ So if you want to expire brutes after an hour change the keyword 'daily' to
 'hourly'. Check the logrotate man page for more options.
 
 
-Watching the logs:
+## Watching the logs:
 
 The main sshd log file and the logwatcher in action:
 ```
