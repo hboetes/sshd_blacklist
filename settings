@@ -4,7 +4,7 @@ name=sshd_blacklist
 # Target file for nftables config file.
 target=/etc/nftables/$name.nft
 # log entries matching these strings indicate a brute forcing attempt.
-regex='(Failed password for|Unable to negotiate)'
+regex='(Failed password for|Unable to negotiate|invalid user)'
 
 # The log where remove_those_that_gave_up logs to.
 log=/var/log/ulogd/remove_those_that_gave_up.log
