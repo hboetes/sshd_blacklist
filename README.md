@@ -49,7 +49,7 @@ We don't want to lock out ourselves, so inspect the whitelist file:
 ```
 
 And adapt it to your liking. You can add single IP-addresses and
-CIDR-ranges. The smaller this file is the faster the scripts will run.
+CIDR-ranges. The smaller this file is, the faster the scripts will run.
 You can also optimize the whitelist file by putting the most likely
 candidates on top.
 
