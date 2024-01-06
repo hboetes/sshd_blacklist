@@ -5,6 +5,16 @@
 # https://lore.kernel.org/netfilter-devel/CAOzo9e7yoiiTLvMj0_wFaSvdf0XpsymqUVb8nUMAuj96nPM5ww@mail.gmail.com/T/#u
 source /etc/sshd_blacklist/settings
 
+# convert 192.168.1.2-192.168.1.4 to 192.168.1.2/31 192.168.1.4/32
+range2cidr() {
+    ipcalc --no-decorate -d $1
+}
+
+# convert 192.168.1.2/31 to 192.168.1.2 192.168.1.3
+cidr2ips() {
+    ipcalc --no-decorate -S 32 $1 | sed -e 's|/32||'
+}
+
 # Get all ip addresses and ranges from the sshd_blacklist table.
 ranges=$(
     for word in $(nft list set ip $name $name); do
@@ -22,14 +32,12 @@ eikels=$(
     for element in ${=ranges}; do
         case $element in
             *-*)
-                # ipcalc -d converts a range in a set of CIDR.
-                for range in $(ipcalc -d $element | awk -F : '/Network:/ {print $2}'); do
-                    nmap -nsL $range
-                done | awk '/^Nmap scan/ {print $5}'
+                for range in $(range2cidr $element); do
+                    cidr2ips $range
+                done
                 ;;
             */*)
-                # nmap -nsL converts a CIDR into indidivual IP-addresses.
-                nmap -nsL $element | awk '/^Nmap scan/ {print $5}'
+                cidr2ips $element
                 ;;
             *)
                 echo $element

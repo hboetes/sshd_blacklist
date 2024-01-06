@@ -18,6 +18,7 @@ versions, assuming they have the following dependencies available:
 - systemd:
 - geoiplookup: look up the country of origin of an IP.
 - zsh:         the shell I prefer to work with.
+- ipcalc:      to convert ranges to ip-adresses.
 - ulogd:       logs all firewall activity to a proper logfile, instead of to the
   dmesg, this package is not in the default install, so use my copr, see below
 
@@ -25,14 +26,16 @@ versions, assuming they have the following dependencies available:
 Assuming you also have fedora 39, run the following to install the dependencies:
 ```
   curl https://copr.fedorainfracloud.org/coprs/hanb/ulogd/repo/fedora-39/hanb-ulogd-fedora-39.repo > /etc/yum.repos.d/hanb-ulogd-fedora-39.repo
-  dnf install nftables ulogd logrotate systemd GeoIP zsh
+  dnf install nftables ulogd logrotate systemd GeoIP zsh ipcalc
 ```
 
 Or if you use ubuntu/debian:
 ```
   apt install nftables ulogd logrotate systemd geoip-bin zsh
 ```
+And you will need this ipcalc version: https://gitlab.com/ipcalc/ipcalc/ not the one that comes with debian/ubuntu.
 
+# Installation
 Copy this directory to /etc/sshd_blacklist and go into the new directory:
 ```
   git clone https://github.com/hboetes/sshd_blacklist/
@@ -40,7 +43,7 @@ Copy this directory to /etc/sshd_blacklist and go into the new directory:
   cd /etc/sshd_blacklist
 ```
 
-We don't want to lock out ourselves so inspect the whitelist file:
+We don't want to lock out ourselves, so inspect the whitelist file:
 ```
   cat whitelist
 ```
