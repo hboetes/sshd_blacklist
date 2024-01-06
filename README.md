@@ -121,7 +121,7 @@ So if you want to expire brutes after an hour change the keyword 'daily' to
 
 
 ## Watching the logs:
-The main sshd log file and the logwatcher in action, you should see abusers get
+The main sshd log and the logwatcher in action, you should see abusers getting
 blocked instantly after their attempt.
 ```
   journalctl -f -u sshd -u sshd_blacklist
