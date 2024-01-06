@@ -18,7 +18,7 @@ versions, assuming they have the following dependencies available:
 - systemd:
 - geoiplookup: look up the country of origin of an IP.
 - zsh:         the shell I prefer to work with.
-- ipcalc:      to convert ranges to ip-adresses.
+- ipcalc:      to convert ip-ranges to ip-adresses.
 - ulogd:       logs all firewall activity to a proper logfile, instead of to the
   dmesg, this package is not in the default install, so use my copr, see below
 
@@ -126,9 +126,10 @@ blocked instantly after their attempt.
 ```
   journalctl -f -u sshd -u sshd_blacklist
 ```
-You can safely ignore messages like: `fatal: Timeout before authentication for ...`, most
-abusers send multiple requests at the same time, and they got blocked so they couldn't
-finish they attempts.
+
+You can safely ignore messages like: `fatal: Timeout before authentication
+for...`, most abusers send multiple requests at the same time, and they got
+blocked, so they couldn't finish their attempts.
 
 The firewall log output:
 ```
