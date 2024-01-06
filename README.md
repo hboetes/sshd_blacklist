@@ -121,17 +121,22 @@ So if you want to expire brutes after an hour change the keyword 'daily' to
 
 
 ## Watching the logs:
-The main sshd log file and the logwatcher in action:
+The main sshd log file and the logwatcher in action, you should see abusers get
+blocked instantly after their attempt.
 ```
   journalctl -f -u sshd -u sshd_blacklist
 ```
+You can safely ignore messages like: `fatal: Timeout before authentication for ...`, most
+abusers send multiple requests at the same time, and they got blocked so they couldn't
+finish they attempts.
+
 The firewall log output:
 ```
   tail -F /var/log/ulogd/ulogd_syslogemu.log
 ```
 
 ## Disabling sshd_blacklist
-In case of emergency you can disable the sshd_blacklist rules by simply running:
+In case of emergency, you can disable the sshd_blacklist rules by simply running:
 ```
    sshd_blacklist_stop
 ```
