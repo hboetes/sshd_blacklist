@@ -53,7 +53,6 @@ CIDR-ranges. The smaller this file is the faster the scripts will run.
 You can also optimize the whitelist file by putting the most likely
 candidates on top.
 
-## Installation
 Now let's create the initial blacklist table:
 ```
   ./sshd_blacklist_init
@@ -122,7 +121,6 @@ So if you want to expire brutes after an hour change the keyword 'daily' to
 
 
 ## Watching the logs:
-
 The main sshd log file and the logwatcher in action:
 ```
   journalctl -f -u sshd -u sshd_blacklist
