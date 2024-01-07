@@ -1,6 +1,6 @@
 #!/bin/zsh
 # This file saves the actual running table to disk. To run before shutdowns.
-name=sshd_blacklist
+source /etc/sshd_blacklist/settings
 store=/etc/$name/$name.nft
 
 # Now create the final config file, with all entries added.

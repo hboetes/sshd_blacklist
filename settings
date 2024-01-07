@@ -1,3 +1,6 @@
+# I recommend you do not change the settings, unless you have found I've missed
+# something important.
+
 # Select your cool name for the table here.
 name=sshd_blacklist
 
