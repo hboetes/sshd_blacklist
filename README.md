@@ -60,7 +60,7 @@ Now let's create the initial blacklist table:
 
 Noone is being blocked yet, but the table is there.
 ```
-  nft list table ip sshd_blacklist | less
+  nft list table ip sshd_blacklist
 ```
 
 I like to see all configs in this directory, but that's not where they actually
