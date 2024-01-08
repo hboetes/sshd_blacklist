@@ -128,7 +128,7 @@ blocked instantly after their attempt.
 ```
 
 You can safely ignore messages like: `fatal: Timeout before authentication
-for...`, most abusers send multiple requests at the same time, and they got
+for...`, some abusers send multiple requests at the same time, and these got
 blocked, so they couldn't finish their attempts.
 
 The firewall log output:
