@@ -60,7 +60,7 @@ Now let's create the initial blacklist table:
 
 Noone is being blocked yet, but the table is there.
 ```
-  nft list table ip sshd_blacklist | less
+  nft list table ip sshd_blacklist
 ```
 
 I like to see all configs in this directory, but that's not where they actually
@@ -109,15 +109,15 @@ This means the main nftables config is `/etc/nftables/main.nft`, let's add
 
 Now about expiring bruteforcers, when is that done, and how?  Well... when they
 give up trying!  Of course log files get larger over time and they have to be
-rotated, so if I look at the log file, just before rotating, and the offender is
+rotated, so if we look at the log file, just before rotating, and the offender is
 no longer there we can safely expire him, which is done by the prerotate script
 configured in `ulogd_logrotate`.
 ```
   ln ulogd_logrotate /etc/logrotate.d/ulog
 ```
 
-So if you want to expire brutes after an hour change the keyword 'daily' to
-'hourly'. Check the logrotate man page for more options.
+So if you want to expire brutes after at least an hour change the keyword 'daily'
+to 'hourly'. Check the logrotate man page for more options.
 
 
 ## Watching the logs:
@@ -128,7 +128,7 @@ blocked instantly after their attempt.
 ```
 
 You can safely ignore messages like: `fatal: Timeout before authentication
-for...`, most abusers send multiple requests at the same time, and they got
+for...`, some abusers send multiple requests at the same time, and these got
 blocked, so they couldn't finish their attempts.
 
 The firewall log output:
