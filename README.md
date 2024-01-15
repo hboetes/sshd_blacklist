@@ -7,7 +7,7 @@ expire after a given period, but will automatically be renewed after consecutive
 
 This is what it looks like:
 ```
-Every 2.0: nft list set sshd_blacklist sshd_blacklist|grep expire                                                                            bran Mon 15 Jan 23:09:42 CET 2024
+Every 2.0: nft list set sshd_blacklist sshd_blacklist|grep expire
                 elements = { 43.135.173.175 timeout 1h expires 59m15s557ms, 91.80.156.133 timeout 1h expires 2m52s983ms,
                              95.255.5.73 timeout 1h expires 55m43s572ms, 103.25.47.94 timeout 1h expires 57m22s686ms,
                              103.151.125.131 timeout 1h expires 59m35s656ms, 106.51.80.81 timeout 1h expires 5m41s224ms,
