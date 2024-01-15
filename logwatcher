@@ -16,5 +16,5 @@ journalctl -f -u sshd | grep -Ea --line-buffered "$regex" | sed -u -e 's|.* \([0
     #     continue
     # fi
     echo "Blocked $eikel from $country"
-    nft add element ip $name $name "{ $eikel timeout 1h expires 1h}"
+    nft add element ip $name $name "{ $eikel timeout 1h expires 1h }"
 done
