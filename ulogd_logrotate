@@ -2,8 +2,4 @@
     missingok
     daily
     copytruncate
-    sharedscripts
-    prerotate
-        /etc/sshd_blacklist/remove_those_that_gave_up
-    endscript
 }
