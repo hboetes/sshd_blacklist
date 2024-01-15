@@ -2,6 +2,19 @@
 sshd_blacklist is an automated sshd bruteforce blocker, something like fail2ban
 or sshguard. But then a lot simpler. We'll let the kernel do the work.
 
+Basically, any ip that is brute-forcing is added to a table which entries will automatically
+expire after a given period, but will automatically be renewed after consecutive attempts.
+
+This is what it looks like:
+```
+Every 2.0: nft list set sshd_blacklist sshd_blacklist|grep expire                                                                            bran Mon 15 Jan 23:09:42 CET 2024
+                elements = { 43.135.173.175 timeout 1h expires 59m15s557ms, 91.80.156.133 timeout 1h expires 2m52s983ms,
+                             95.255.5.73 timeout 1h expires 55m43s572ms, 103.25.47.94 timeout 1h expires 57m22s686ms,
+                             103.151.125.131 timeout 1h expires 59m35s656ms, 106.51.80.81 timeout 1h expires 5m41s224ms,
+                             112.165.212.156 timeout 1h expires 59m36s215ms, 168.197.49.139 timeout 1h expires 59m18s602ms,
+                             200.237.128.234 timeout 1h expires 58m276ms }
+```
+
 ## Before we do anything
 First some housekeeping:
 - This is beta code!
