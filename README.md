@@ -1,6 +1,6 @@
 # sshd_blacklist
 sshd_blacklist is an automated sshd bruteforce blocker, something like fail2ban
-or sshguard. But then a lot simpler.
+or sshguard. But then a lot simpler. We'll let the kernel do the work.
 
 ## Before we do anything
 First some housekeeping:
@@ -143,10 +143,26 @@ The firewall log output:
 ```
 
 Or if you do have ulogd:
-
 ```
   tail -F /var/log/ulogd/ulogd_syslogemu.log
 ```
+
+And let's look at nftables in action:
+```
+   watch 'nft list ruleset|grep expire'
+```
+
+## Expiring with nftables
+Here is where the magic is happening:
+```
+        chain permissiondenied {
+                type filter hook input priority filter - 10; policy accept;
+                ip saddr @sshd_blacklist update @sshd_blacklist { ip saddr timeout 1h }
+                ip saddr @sshd_blacklist log prefix "[sshd_blacklist]" group 0 drop
+        }
+```
+This means: after an abuser has been stopped, every time he tries to log in again, his ban-time will
+automatically be reset to 1 hour. Only after giving up he will be "unbanned".
 
 
 ## Disabling sshd_blacklist
