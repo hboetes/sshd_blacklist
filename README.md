@@ -43,10 +43,12 @@ I've also added a config file to this repo.
   dnf install ulogd-pcap
   cp ulogd.conf /etc
   systemctl enable --now ulogd
+  cp ulogd_logrotate /etc/logrotate.d/ulogd
 ```
 #### Ubuntu
 Just run `apt-get install ulogd2-pcap`
 
+#### watching the logs
 And now you can watch the firewall logs like this:
 
 ```
