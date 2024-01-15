@@ -76,7 +76,7 @@ candidates on top.
 
 Now let's create the initial blacklist table:
 ```
-  ./sshd_blacklist_init
+  ./init_sshd_blacklist
 ```
 
 Noone is being blocked yet, but the table is there.
@@ -170,5 +170,5 @@ automatically be reset to 1 hour. Only after giving up he will be "unbanned".
 ## Disabling sshd_blacklist
 In case of emergency, you can disable the sshd_blacklist rules by simply running:
 ```
-   sshd_blacklist_stop
+   stop_sshd_blacklist
 ```
