@@ -25,6 +25,7 @@ table ip $name {
     chain permissiondenied {
         type filter hook input priority filter - 10
         policy accept
+        ip saddr @$name update @$name { ip saddr timeout 1h }
         ip saddr @$name log prefix "[$name]" group 0 drop
     }
 }
