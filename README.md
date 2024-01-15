@@ -18,22 +18,41 @@ versions, assuming they have the following dependencies available:
 - systemd:
 - geoiplookup: look up the country of origin of an IP.
 - zsh:         the shell I prefer to work with.
-- ipcalc:      to convert ip-ranges to ip-adresses.
-- ulogd:       logs all firewall activity to a proper logfile, instead of to the
-  dmesg, this package is not in the default install, so use my copr, see below
 
-
+## Install dependencies
 Assuming you also have fedora 39, run the following to install the dependencies:
 ```
-  curl https://copr.fedorainfracloud.org/coprs/hanb/ulogd/repo/fedora-39/hanb-ulogd-fedora-39.repo > /etc/yum.repos.d/hanb-ulogd-fedora-39.repo
-  dnf install nftables ulogd logrotate systemd GeoIP zsh ipcalc
+  dnf install nftables logrotate GeoIP zsh
 ```
 
 Or if you use ubuntu/debian:
 ```
-  apt install nftables ulogd logrotate systemd geoip-bin zsh
+  apt install nftables logrotate geoip-bin zsh
 ```
-And you will need this ipcalc version: https://gitlab.com/ipcalc/ipcalc/ not the one that comes with debian/ubuntu.
+
+### Nice software to have installed:
+- ulogd:       logs all firewall activity to a proper logfile, instead of to the
+  dmesg.
+
+#### Fedora
+This package is not in the default fedora install, but you can use my copr.
+I've also added a config file to this repo.
+
+```
+  curl https://copr.fedorainfracloud.org/coprs/hanb/ulogd/repo/fedora-39/hanb-ulogd-fedora-39.repo > /etc/yum.repos.d/hanb-ulogd-fedora-39.repo
+  dnf install ulogd-pcap
+  cp ulogd.conf /etc
+  systemctl enable --now ulogd
+```
+#### Ubuntu
+Just run `apt-get install ulogd2-pcap`
+
+And now you can watch the firewall logs like this:
+
+```
+   tail -F /var/log/ulogd/ulogd_syslogemu.log
+```
+
 
 # Installation
 Copy this directory to /etc/sshd_blacklist and go into the new directory:
@@ -43,7 +62,7 @@ Copy this directory to /etc/sshd_blacklist and go into the new directory:
   cd /etc/sshd_blacklist
 ```
 
-We don't want to lock out ourselves, so inspect the whitelist file:
+We don't want to lock ourselves out, so inspect the whitelist file:
 ```
   cat whitelist
 ```
@@ -68,7 +87,7 @@ are loaded so I hardlink them in the right place:
 ```
   ln sshd_blacklist.nft /etc/nftables/
   ln sshd_blacklist.service /etc/systemd/system/
-  ln ulogd.conf /etc/
+  ln ulogd.conf /etc/ # optional
 ```
 
 Let's start ulogd and check if it's running:
@@ -89,7 +108,8 @@ If you still have shell acces, you can now enable the logwatcher at boot:
   systemctl enable sshd_blacklist.service
 ```
 
-And with a bit of luck we can see the first brutes being blocked:
+And with a bit of luck we can see the first brutes being blocked, with `dmesg -Tw`
+or if you have ulogd:
 ```
   tail -n 1000 -F /var/log/ulogd/ulogd_syslogemu.log | grep sshd_blacklist
 ```
@@ -107,34 +127,27 @@ This means the main nftables config is `/etc/nftables/main.nft`, let's add
   echo include /etc/nftables/sshd_blacklist.nft >> /etc/nftables/main.nft
 ```
 
-Now about expiring bruteforcers, when is that done, and how?  Well... when they
-give up trying!  Of course log files get larger over time and they have to be
-rotated, so if we look at the log file, just before rotating, and the offender is
-no longer there we can safely expire him, which is done by the prerotate script
-configured in `ulogd_logrotate`.
-```
-  ln ulogd_logrotate /etc/logrotate.d/ulog
-```
-
-So if you want to expire brutes after at least an hour change the keyword 'daily'
-to 'hourly'. Check the logrotate man page for more options.
-
-
 ## Watching the logs:
 The main sshd log and the logwatcher in action, you should see abusers getting
 blocked instantly after their attempt.
 ```
   journalctl -f -u sshd -u sshd_blacklist
 ```
-
 You can safely ignore messages like: `fatal: Timeout before authentication
 for...`, some abusers send multiple requests at the same time, and these got
 blocked, so they couldn't finish their attempts.
 
 The firewall log output:
 ```
+  dmesg -Tw
+```
+
+Or if you do have ulogd:
+
+```
   tail -F /var/log/ulogd/ulogd_syslogemu.log
 ```
+
 
 ## Disabling sshd_blacklist
 In case of emergency, you can disable the sshd_blacklist rules by simply running:
