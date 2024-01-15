@@ -89,11 +89,11 @@ are loaded so I hardlink them in the right place:
 ```
   ln sshd_blacklist.nft /etc/nftables/
   ln sshd_blacklist.service /etc/systemd/system/
-  ln ulogd.conf /etc/ # optional
 ```
 
-Let's start ulogd and check if it's running:
+If you also want to set up ulogd, let's configure it and make sure it's up, and running and started at boot:
 ```
+  ln ulogd.conf /etc/
   systemctl enable --now ulogd
   systemctl status ulogd
 ```
