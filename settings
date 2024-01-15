@@ -1,15 +1,14 @@
-# I recommend you do not change the settings, unless you have found I've missed
-# something important.
+# Expiration time
+expire=1h
+
+# I recommend you do not change the settings below, unless you have found I've
+# missed something important.
 
 # Select your cool name for the table here.
 name=sshd_blacklist
 
 # Target file for nftables config file.
 target=/etc/nftables/$name.nft
+
 # log entries matching these strings indicate a brute forcing attempt.
 regex='(Failed password for|Unable to negotiate|invalid user|invalid format|by authenticating user)'
-
-# The log where remove_those_that_gave_up logs to.
-log=/var/log/ulogd/remove_those_that_gave_up.log
-# The ulog log file where all attempts to the ssh server, blocked by nftables are logged.
-ulog=/var/log/ulogd/ulogd_syslogemu.log
