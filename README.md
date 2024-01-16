@@ -58,12 +58,16 @@ I've also added a config file to this repo.
   systemctl enable --now ulogd
   cp ulogd_logrotate /etc/logrotate.d/ulogd
 ```
-#### Ubuntu
-Just run `apt-get install ulogd2-pcap`
+#### Ubuntu/Debian
+Run the following:
+```
+  apt-get install ulogd2-pcap
+  cp ulogd.conf /etc
+  systemctl enable --now ulogd
+  systemctl status ulogd
+```
 
-#### watching the logs
-And now you can watch the firewall logs like this:
-
+#### Watching the firewall log:
 ```
    tail -F /var/log/ulogd/ulogd_syslogemu.log
 ```
