@@ -108,14 +108,6 @@ are loaded so I hardlink them in the right place:
   ln sshd_blacklist.service /etc/systemd/system/
 ```
 
-If you also want to set up ulogd, let's configure it and make sure it's up, and running and started at boot:
-```
-  ln ulogd.conf /etc/
-  systemctl enable --now ulogd
-  systemctl status ulogd
-```
-ulogd should be logging all firewall activity to `/var/log/ulogd/ulogd_syslogemu.log`
-
 Now it's getting exiting, we're starting the logwatcher, everyone who is not
 whitelisted and tries to log on with a wrong password will get locked out!
 ```
