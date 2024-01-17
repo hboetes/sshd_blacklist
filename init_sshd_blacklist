@@ -17,6 +17,7 @@ table ip $name
 flush table ip $name
 table ip $name {
     set $name {
+        type ipv4_addr
         size 65535
         flags dynamic,timeout
     }
