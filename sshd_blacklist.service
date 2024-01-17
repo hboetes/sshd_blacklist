@@ -5,6 +5,7 @@ After=network.target network-online.target
 
 [Service]
 Type=simple
+ExecStartPre=/etc/sshd_blacklist/sshd_blacklist.nft
 ExecStart=/etc/sshd_blacklist/logwatcher
 ExecStopPost=/etc/sshd_blacklist/save_sshd_blacklist
 Restart=on-failure

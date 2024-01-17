@@ -104,7 +104,6 @@ Noone is being blocked yet, but the table is there.
 I like to see all configs in this directory, but that's not where they actually
 are loaded so I hardlink them in the right place:
 ```
-  ln sshd_blacklist.nft /etc/nftables/
   ln sshd_blacklist.service /etc/systemd/system/
 ```
 
@@ -123,19 +122,6 @@ And with a bit of luck we can see the first brutes being blocked, with `dmesg -T
 or if you have ulogd:
 ```
   tail -n 1000 -F /var/log/ulogd/ulogd_syslogemu.log | grep sshd_blacklist
-```
-
-To ensure our rules are loaded at boot inspect `/etc/sysconfig/nftables.conf`.
-```
-  cat /etc/sysconfig/nftables.conf
-```
-
-Which will probably return something like: `include "/etc/nftables/main.nft"`
-
-This means the main nftables config is `/etc/nftables/main.nft`, let's add
-`sshd_blacklist.nft` to that file:
-```
-  echo include /etc/nftables/sshd_blacklist.nft >> /etc/nftables/main.nft
 ```
 
 ## Watching the logs:
