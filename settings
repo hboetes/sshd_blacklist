@@ -11,4 +11,4 @@ name=sshd_blacklist
 target=/etc/nftables/$name.nft
 
 # log entries matching these strings indicate a brute forcing attempt.
-regex='(Failed password for|Unable to negotiate|invalid user|invalid format|by authenticating user)'
+regex='(Failed password for|Unable to negotiate|invalid user|invalid format|by authenticating user|Connection reset by)'
