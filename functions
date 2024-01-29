@@ -20,10 +20,9 @@ v4test() {
         if (( (addr1&mask2) == (addr2&mask2) && mask1 >= mask2 )); then
             # echo "$1 is in network $2"
             return 0
-        else
-            # echo "$1 is not in network $2"
-            return 1
         fi
+        # echo "$1 is not in network $2"
+        return 1
     }
 }
 
@@ -35,6 +34,6 @@ v4test() {
 
 is_whitelisted() {
     for whitelisted in $(< /etc/sshd_blacklist/whitelist); do
-        v4test $1 $whitelisted && return 0
+        v4test $1 $whitelisted
     done
 }
