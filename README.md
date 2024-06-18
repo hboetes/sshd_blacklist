@@ -17,10 +17,12 @@ Every 2.0: nft list set sshd_blacklist sshd_blacklist|grep expire
 
 ## Before we do anything
 First some housekeeping:
-- This is beta code!
+- This is beta code.
 - All these instructions have to be done as user root.
 - Only run this program over an ssh session if you are really careful or you can
   easily get to your system.
+- Most ssh-bots are already known by blocklist.de, check this repo https://github.com/hboetes/theblackguardscontrol
+  to set it up with nft.
 
 ## Preparation
 I'm running sshd_blacklist on fedora 39. It should be portable to other linux
