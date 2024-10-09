@@ -10,7 +10,7 @@ nft table ip $name
 nft delete table ip $name
 
 # Set up table.
-cat << EOF > $name.nft
+cat << EOF > /etc/nftables/$name.nft
 #!/usr/sbin/nft -f
 # First create the table, so we can flush it, even if it didn't exist before.
 table ip $name
@@ -32,7 +32,5 @@ table ip $name {
 EOF
 
 # Then load this file into the running ruleset
-chmod 755 ./$name.nft
-./$name.nft
-# And save it to disk.
-./save_sshd_blacklist
+chmod 755 /etc/nftables/$name.nft
+/etc/nftables/$name.nft
